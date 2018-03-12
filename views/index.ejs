@@ -1,0 +1,116 @@
+<% include ./partials/header %>
+
+<div class="container">
+   <div class="row">
+     <div class="col-md-7 col-md-offset-2">
+      <button type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#formModal">
+         Add New Recipe
+      </button>
+       </br>
+       <% Recipes.forEach(function(recipe){ %>
+         <div class="well">
+          <h4><%= recipe.name %>
+          <button class="btn btn-default pull-right" data-toggle="collapse" href="#<%= recipe._id %>" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-triangle-bottom">
+          </span> View</button></h4>
+           <div class="collapse" id="<%= recipe._id %>">
+              <br></br>
+              <h4 style="color:blue">Ingredients: </h4><p><%= recipe.ingredients %></p>
+              <br></br>
+              <h4 style="color:blue">Process: </h4><p><%= recipe.process %></p>
+              </br>
+              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#<%= recipe.name %>" ><span class="glyphicon glyphicon-edit"></span></button>
+<!--===================-->
+<!--delete recipe route-->
+<!--===================-->
+               <form id="delete" action="<%= recipe._id %>?_method=DELETE" method="POST">
+                     <button class="btn btn-danger" ><span class="glyphicon glyphicon-trash"></span></button>
+               </form>
+<!--===================-->
+<!--edit recipe moda-->
+<!--===================-->        
+<div class="modal fade" id="<%= recipe.name %>" tabindex="-1" role="dialog" aria-labelledby="mLabel">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <form action="<%= recipe._id %>?_method=PUT" method="POST">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="mLabel">Edit Recipe</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+               <label>Recipe Name</label>
+               <input type="text" class="form-control"  name=recipe[name] value="<%= recipe.name%>"></input>
+            </div>
+            <div class="form-group">
+               <label>Ingredients</label>
+               <textarea rows="5" class="form-control"  name=recipe[ingredients] ><%= recipe.ingredients%></textarea>
+            </div>
+            <div class="form-group">
+               <label>Process</label>
+               <textarea rows="9" class="form-control"  name=recipe[process] ><%= recipe.process%></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+      </form>
+     </div>
+   </div>
+</div>
+            </div>
+         </div>
+
+
+     <%  }) %>
+     </div>
+   </div>
+</div>
+
+<!--=====================-->
+<!--add new recipe modal-->
+<!--=====================-->
+
+     <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="abel">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+          <form action="/addrecipe" method="POST">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="abel">Add Recipe</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                   <label>Recipe Name</label>
+                   <input type="text" class="form-control" name=recipe[name]></input>
+                </div>
+                <div class="form-group">
+                   <label>Ingredients</label>
+                   <textarea rows="5" class="form-control" name="recipe[ingredients]"></textarea>
+                </div>
+                <div class="form-group">
+                   <label>Process</label>
+                   <textarea rows="9" class="form-control" name="recipe[process]"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+          </form>
+         </div>
+       </div>
+     </div>
+
+
+     
+   
+
+
+<% include ./partials/footer %>
+
+<!--=====================-->
+<!--extra modal-->
+<!--=====================-->
+ 
+     
